@@ -603,14 +603,26 @@ class syntax_plugin_gallery extends DokuWiki_Syntax_Plugin {
      * supplied in array
      */
     function _meta(&$img,$opt){
+        $iptcTitle = $img['meta']->getField('Simple.Title');
+        $iptcDesc  = $img['meta']->getField('Iptc.Caption');
+
+        $filename = mediaFN($img['id']);
+        $size = getimagesize($filename, $info);
+        if(isset($info['APP13']))
+        {
+            $iptc = iptcparse($info['APP13']);
+            $iptcTitle = $iptc['2#105'];
+            $iptcDesc  = $iptc['2#120'];
+        }
+
         if($img['meta']){
             // map JPEGMeta calls to opt names
 
             switch($opt){
                 case 'title':
-                    return $img['meta']->getField('Simple.Title');
+                    return $iptcTitle;//$img['meta']->getField('Simple.Title');
                 case 'desc':
-                    return $img['meta']->getField('Iptc.Caption');
+                    return $iptcDesc;//$img['meta']->getField('Iptc.Caption');
                 case 'cdate':
                     return $img['meta']->getField('Date.EarliestTime');
                 case 'width':
