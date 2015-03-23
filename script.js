@@ -44,7 +44,8 @@ jQuery(function(){
     jQuery("a.lightbox, a[rel^='lightbox']").prettyPhoto({
         overlay_gallery: false,
         slideshow: 2000,
-        description_src: 'longdesc'
+        description_src: 'longdesc',
+        show_title: false
     });
 
     gallery_plugin();
