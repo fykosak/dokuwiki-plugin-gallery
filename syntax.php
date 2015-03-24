@@ -376,18 +376,41 @@ class syntax_plugin_gallery extends DokuWiki_Syntax_Plugin {
             $close_pg = false;
 
             $i = 0;
-            foreach($files as $img){
+            if($this->getConf('responsive')){
+                foreach ($files as $img){
+                    // new page?
 
-                // new page?
-                if($data['paginate'] && ($i % $data['paginate'] == 0)){
-                     $ret .= '<div class="gallery_page gallery__'.$data['galid'].'" id="gallery__'.$data['galid'].'_'.(++$page).'">';
-                     $close_pg = true;
+                    if($data['paginate'] && (($i % $data['paginate']) == 0)){
+
+                        $ret .= '<div class="gallery_page gallery__'.$data['galid'].'" id="gallery__'.$data['galid'].'_'.( ++$page).'">';
+                        $close_pg = true;
+                    }
+                    // an image cell
+
+                    $ret .= '<div class="gallery_image">';
+                    $ret .= $this->_image($img,$data);
+                    $ret .= $this->_showname($img,$data);
+                    $ret .= $this->_showtitle($img,$data);
+                    $ret .= '</div >';
+                    $i++;
+                    // close current page and table
+                    if($data['paginate'] && ($i % $data['paginate'] == 0)){
+
+
+                        $ret .= '</div>';
+                        $close_pg = false;
+                    }
+                }
+            } else{
+                //for table 
+                foreach ($files as $img){
+                    $ret .= '<div class="gallery_page gallery__'.$data['galid'].'" id="gallery__'.$data['galid'].'_'.( ++$page).'">';
+                    $close_pg = true;
                 }
 
                 // new table?
                 if($i == 0 || ($data['paginate'] && ($i % $data['paginate'] == 0))){
                     $ret .= '<table>';
-
                 }
 
                 // new row?
@@ -395,12 +418,15 @@ class syntax_plugin_gallery extends DokuWiki_Syntax_Plugin {
                     $ret .= '<tr>';
                 }
 
+
                 // an image cell
                 $ret .= '<td>';
+
                 $ret .= $this->_image($img,$data);
                 $ret .= $this->_showname($img,$data);
                 $ret .= $this->_showtitle($img,$data);
                 $ret .= '</td>';
+
                 $i++;
 
                 // done with this row? cloase it
@@ -409,6 +435,7 @@ class syntax_plugin_gallery extends DokuWiki_Syntax_Plugin {
                     $ret .= '</tr>';
                     $close_tr = false;
                 }
+
 
                 // close current page and table
                 if($data['paginate'] && ($i % $data['paginate'] == 0)){
@@ -424,7 +451,6 @@ class syntax_plugin_gallery extends DokuWiki_Syntax_Plugin {
                     $ret .= '</div>';
                     $close_pg = false;
                 }
-
             }
 
             if ($close_tr){
