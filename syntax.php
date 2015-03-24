@@ -378,49 +378,36 @@ class syntax_plugin_gallery extends DokuWiki_Syntax_Plugin {
             $i = 0;
             foreach($files as $img){
 
+
+
                 // new page?
-                if($data['paginate'] && ($i % $data['paginate'] == 0)){
+               
+                if($data['paginate'] && (($i % $data['paginate']) == 0)){
+                  
                      $ret .= '<div class="gallery_page gallery__'.$data['galid'].'" id="gallery__'.$data['galid'].'_'.(++$page).'">';
                      $close_pg = true;
+                     
                 }
 
-                // new table?
-                if($i == 0 || ($data['paginate'] && ($i % $data['paginate'] == 0))){
-                    $ret .= '<table>';
-
-                }
-
-                // new row?
-                if($i % $data['cols'] == 0){
-                    $ret .= '<tr>';
-                }
+               
+               
 
                 // an image cell
-                $ret .= '<td>';
+               
+                $ret .= '<div class="gallery_image">';
                 $ret .= $this->_image($img,$data);
                 $ret .= $this->_showname($img,$data);
                 $ret .= $this->_showtitle($img,$data);
-                $ret .= '</td>';
+                $ret .= '</div >';
                 $i++;
 
                 // done with this row? cloase it
-                $close_tr = true;
-                if($i % $data['cols'] == 0){
-                    $ret .= '</tr>';
-                    $close_tr = false;
-                }
+               
 
                 // close current page and table
                 if($data['paginate'] && ($i % $data['paginate'] == 0)){
-                    if ($close_tr){
-                        // add remaining empty cells
-                        while($i % $data['cols']){
-                            $ret .= '<td></td>';
-                            $i++;
-                        }
-                        $ret .= '</tr>';
-                    }
-                    $ret .= '</table>';
+                    
+                    
                     $ret .= '</div>';
                     $close_pg = false;
                 }
@@ -430,14 +417,14 @@ class syntax_plugin_gallery extends DokuWiki_Syntax_Plugin {
             if ($close_tr){
                 // add remaining empty cells
                 while($i % $data['cols']){
-                    $ret .= '<td></td>';
+                    $ret .= '<div></div>';
                     $i++;
                 }
-                $ret .= '</tr>';
+                $ret .= '</div>';
             }
 
             if(!$data['paginate']){
-                $ret .= '</table>';
+                $ret .= '</div>';
             }elseif ($close_pg){
                 $ret .= '</table>';
                 $ret .= '</div>';
@@ -481,7 +468,7 @@ class syntax_plugin_gallery extends DokuWiki_Syntax_Plugin {
             $pgret .= '</div>';
         }
 
-        return '<div class="gallery'.$align.'"'.$xalign.'>'.$pgret.$ret.'<div class="clearer"></div></div>';
+        return '<div class="gallery'.$align.'"'.$xalign.'>'.$pgret.$ret.$pgret.'<div class="clearer"></div></div>';
     }
 
     /**
