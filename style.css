@@ -526,27 +526,27 @@
 
 
 
-@media screen and (min-width: 1200px){
+@media  (min-width: 1200px){
     .gallery_page .gallery_image{
             width: 25%;
         
     }
 }
 
-@media screen and (min-width: 950px)and(  max-width: 1300px){
+@media  (min-width: 950px)and(  max-width: 1300px){
     .gallery_page .gallery_image{
             width: 33%;
         
     }
 }
-@media screen and (max-width:950px){
+@media  (max-width:950px){
     .gallery_page .gallery_image{
             width: 50%;
         
     }
 }
 
-@media screen and (max-width:600px){
+@media  (max-width:600px){
     .gallery_page .gallery_image{
             width: 100%;
         
