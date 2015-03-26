@@ -14,3 +14,4 @@ $meta['cols']             = array('numeric');
 $meta['sort']    = array('multichoice', '_choices' => array('file','mod','date','title'));
 $meta['options'] = array('multicheckbox', '_choices' => array('cache','crop','direct','lightbox','random','reverse','showname','showtitle'));
 
+$meta['responsive'] = array('onoff');

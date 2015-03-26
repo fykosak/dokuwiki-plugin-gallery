@@ -13,3 +13,5 @@ $conf['cols']             = 5;
 
 $conf['sort'] = 'file';
 $conf['options'] = 'cache';
+
+$conf['responsive']=0; 
