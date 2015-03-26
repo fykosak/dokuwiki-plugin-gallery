@@ -523,3 +523,32 @@
             margin: 0 0 5px 15px;
             z-index: 9999;
         }
+
+
+
+@media screen and (min-width: 1200px){
+    .gallery_page .gallery_image{
+            width: 25%;
+        
+    }
+}
+
+@media screen and (min-width: 950px)and(  max-width: 1300px){
+    .gallery_page .gallery_image{
+            width: 33%;
+        
+    }
+}
+@media screen and (max-width:950px){
+    .gallery_page .gallery_image{
+            width: 50%;
+        
+    }
+}
+
+@media screen and (max-width:600px){
+    .gallery_page .gallery_image{
+            width: 100%;
+        
+    }
+}
