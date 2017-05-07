@@ -32,6 +32,16 @@ jQuery(function () {
         $opts[0].appendChild(gbrk);
     }
 
+    const replaceImages = function () {
+        $image = jQuery('div.gallery_page .gallery-image-replacement').each(function () {
+            if ($(this).is(':visible ')) {
+                const data = $(this).data('src');
+                //$(this).after($('<img/>').attr(data));
+                $(this).css({'background-image': 'url(' + data + ')'});
+            }
+        });
+    };
+
     /**
      * Display a selected page and hide all others
      */
@@ -40,6 +50,8 @@ jQuery(function () {
         var $pages = jQuery('div.gallery__' + galid);
         $pages.hide();
         jQuery('#' + e.target.hash.substr(1)).show();
+        replaceImages();
+
         return false;
     }
 
@@ -51,13 +63,12 @@ jQuery(function () {
     });
 
     gallery_plugin();
-
+    replaceImages();
     // hide all pages except the first one
-    var $pages = jQuery('div.gallery_page');
+    var $pages = jQuery('.gallery_page');
     $pages.hide();
     $pages.eq(0).show();
 
     // attach page selector
     jQuery('a.gallery_pgsel').click(gallery_pageselect);
 });
-

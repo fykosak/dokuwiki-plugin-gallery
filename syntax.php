@@ -374,39 +374,26 @@ class syntax_plugin_gallery extends DokuWiki_Syntax_Plugin {
             $ret .= $this->_showtitle($files[0],$data);
         }elseif($data['cols'] > 0){ // format as table
             $close_pg = false;
-
             $i = 0;
             foreach($files as $img){
 
                 // new page?
                 if($data['paginate'] && ($i % $data['paginate'] == 0)){
-                     $ret .= '<div class="gallery_page gallery__'.$data['galid'].'" id="gallery__'.$data['galid'].'_'.(++$page).'">';
+                     $ret .= '<div class="gallery_page gallery-responsive-container row gallery__'.$data['galid'].'" id="gallery__'.$data['galid'].'_'.(++$page).'">';
                      $close_pg = true;
                 }
 
-                // new table?
-                if($i == 0 || ($data['paginate'] && ($i % $data['paginate'] == 0))){
-                    $ret .= '<table>';
-
-                }
-
-                // new row?
-                if($i % $data['cols'] == 0){
-                    $ret .= '<tr>';
-                }
-
                 // an image cell
-                $ret .= '<td>';
+                $ret .= '<div class="col-xl-4 col-lg-6 col-md-6 mb-3">';
                 $ret .= $this->_image($img,$data);
                 $ret .= $this->_showname($img,$data);
                 $ret .= $this->_showtitle($img,$data);
-                $ret .= '</td>';
+                $ret .= '</div>';
                 $i++;
 
                 // done with this row? cloase it
                 $close_tr = true;
                 if($i % $data['cols'] == 0){
-                    $ret .= '</tr>';
                     $close_tr = false;
                 }
 
@@ -415,31 +402,24 @@ class syntax_plugin_gallery extends DokuWiki_Syntax_Plugin {
                     if ($close_tr){
                         // add remaining empty cells
                         while($i % $data['cols']){
-                            $ret .= '<td></td>';
                             $i++;
                         }
-                        $ret .= '</tr>';
                     }
-                    $ret .= '</table>';
                     $ret .= '</div>';
                     $close_pg = false;
                 }
-
             }
 
             if ($close_tr){
                 // add remaining empty cells
                 while($i % $data['cols']){
-                    $ret .= '<td></td>';
                     $i++;
                 }
-                $ret .= '</tr>';
             }
 
             if(!$data['paginate']){
-                $ret .= '</table>';
+
             }elseif ($close_pg){
-                $ret .= '</table>';
                 $ret .= '</div>';
             }
         }else{ // format as div sequence
@@ -514,11 +494,11 @@ class syntax_plugin_gallery extends DokuWiki_Syntax_Plugin {
 
         //prepare img attributes
         $i             = array();
-        $i['width']    = $w;
-        $i['height']   = $h;
-        $i['border']   = 0;
-        $i['alt']      = $this->_meta($img,'title');
-        $i['class']    = 'tn';
+        $i['data-width']    = $w;
+        $i['data-height']   = $h;
+        $i['data-border']   = 0;
+        $i['data-alt']      = $this->_meta($img,'title');
+        $i['data-class']    = 'tn';
         $iatt = buildAttributes($i);
         $src  = ml($img['id'],$dim);
 
@@ -552,7 +532,7 @@ class syntax_plugin_gallery extends DokuWiki_Syntax_Plugin {
         // prepare output
         $ret  = '';
         $ret .= '<a href="'.$href.'" '.$aatt.'>';
-        $ret .= '<img src="'.$src.'" '.$iatt.' />';
+        $ret .= '<div class="gallery-image-replacement gallery-image" data-src="'.$src.'" '.$iatt.' ></div>';
         $ret .= '</a>';
         return $ret;
     }
