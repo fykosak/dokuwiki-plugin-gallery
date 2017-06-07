@@ -33,7 +33,7 @@ jQuery(function () {
     }
 
     const replaceImages = function () {
-        $image = jQuery('div.gallery_page .gallery-image-replacement').each(function () {
+        $image = jQuery('.gallery-image-replacement').each(function () {
             if ($(this).is(':visible ')) {
                 const data = $(this).data('src');
                 //$(this).after($('<img/>').attr(data));
