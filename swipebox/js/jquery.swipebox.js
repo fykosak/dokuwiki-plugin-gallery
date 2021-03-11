@@ -713,21 +713,11 @@
 					caption = elements[ index ].caption;
 				}
 
-				if ( title || caption ) {
-					$( '#swipebox-top-bar' ).show();
+                $( '#swipebox-top-bar' ).show();
 
-					if(title) {
-						var tdiv = $('<div></div>').addClass('title').text(title);
-						$('#swipebox-title').append(tdiv);
-					}
-
-					if(caption) {
-						var cdiv = $('<div></div>').addClass('caption').text(caption);
-						$('#swipebox-title').append(cdiv);
-					}
-				} else {
-					$( '#swipebox-top-bar' ).hide();
-				}
+                var num = index + 1;
+                var pdiv = $('<div></div>').addClass('paging').text(num + '/' + elements.length);
+                $('#swipebox-title').append(pdiv);
 			},
 
 			/**
@@ -764,7 +754,7 @@
 				if ( a.search ) {
 					qs = JSON.parse( '{"' + a.search.toLowerCase().replace('?','').replace(/&/g,'","').replace(/=/g,'":"') + '"}' );
 				}
-				
+
 				// Extend with custom data
 				if ( $.isPlainObject( customData ) ) {
 					qs = $.extend( qs, customData, plugin.settings.queryStringData ); // The dev has always the final word
